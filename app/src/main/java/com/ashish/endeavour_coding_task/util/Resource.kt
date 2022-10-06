@@ -1,4 +1,4 @@
-package com.ashish.endeavour_coding_task.domain.util
+package com.ashish.endeavour_coding_task.util
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Success<T>(data: T?): Resource<T>(data)
