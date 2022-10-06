@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.ashish.endeavour_coding_task.data.local.ProductDatabase
 import com.ashish.endeavour_coding_task.data.remote.ProductApi
 import com.ashish.endeavour_coding_task.data.repository.ProductRepositoryImpl
+import com.ashish.endeavour_coding_task.domain.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,7 +59,7 @@ object ProductDataModule {
     fun provideProductRepository(
         productApi: ProductApi,
         db: ProductDatabase
-    ): ProductRepositoryImpl {
+    ): ProductRepository {
         return ProductRepositoryImpl(
             dao = db.dao,
             productApi = productApi
