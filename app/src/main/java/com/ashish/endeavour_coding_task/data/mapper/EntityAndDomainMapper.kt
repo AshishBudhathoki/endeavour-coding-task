@@ -3,7 +3,7 @@ package com.ashish.endeavour_coding_task.data.mapper
 import com.ashish.endeavour_coding_task.data.local.entity.ProductEntity
 import com.ashish.endeavour_coding_task.domain.model.Product
 
-fun Product.toEntityMapper(): ProductEntity {
+fun Product.toProductEntity(): ProductEntity {
     return ProductEntity(
         id = id,
         imageUrl = imageUrl,
@@ -14,7 +14,7 @@ fun Product.toEntityMapper(): ProductEntity {
     )
 }
 
-fun ProductEntity.toDomainMapper(): Product {
+fun ProductEntity.toProductDomain(): Product {
     return Product(
         id = id,
         imageUrl = imageUrl,
