@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ashish.endeavour_coding_task">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".ProductApplication"
         android:allowBackup="true"
