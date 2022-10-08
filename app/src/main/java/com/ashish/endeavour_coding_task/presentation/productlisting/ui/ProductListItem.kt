@@ -34,7 +34,7 @@ fun ProductListItem(
     product: Product,
     modifier: Modifier = Modifier,
     onClickedProduct: (String) -> Unit,
-    onToggleFav: (Boolean) -> Unit
+    onToggleFav: (String, Boolean) -> Unit
 ) {
     val spacing = LocalSpacing.current
     val context = LocalContext.current
@@ -88,8 +88,8 @@ fun ProductListItem(
                 }
 
                 FavoriteButton(isFavourite = product.isFavourite) {
-                    Log.d("Favourite is: %s", "${product.name}  ${it.toString()}")
-                    onToggleFav(it)
+                    Log.d("Favourite is: %s", "${product.name}  $it")
+                    onToggleFav(product.id, it)
                 }
             }
 
@@ -136,6 +136,8 @@ fun FavoriteButton(
     isFavourite: Boolean,
     onToggleFav: (Boolean) -> Unit
 ) {
+
+    Log.d("ISFAVIS %S", isFavourite.toString())
 
     var isFavorite by remember { mutableStateOf(isFavourite) }
 

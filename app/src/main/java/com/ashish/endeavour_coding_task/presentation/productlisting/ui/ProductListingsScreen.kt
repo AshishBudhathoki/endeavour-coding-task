@@ -16,6 +16,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ashish.endeavour_coding_task.presentation.productlisting.ProductListingEvent
 import com.ashish.endeavour_coding_task.presentation.productlisting.ProductListingState
 import com.ashish.endeavour_coding_task.presentation.productlisting.ProductListingViewModel
@@ -60,7 +61,7 @@ fun ProductListingsScreen(
                 if (state.error != null && state.productList.isEmpty()) {
                     ErrorText(state.error, spacing)
                 }
-                ProductListLazyColumn(state, spacing, onNavigateToSearch)
+                ProductListLazyColumn(state, spacing, onNavigateToSearch, viewModel)
 
             }
         }
@@ -94,7 +95,8 @@ private fun ErrorText(error: String, spacing: Dimensions) {
 private fun ProductListLazyColumn(
     state: ProductListingState,
     spacing: Dimensions,
-    onNavigateToSearch: (String) -> Unit
+    onNavigateToSearch: (String) -> Unit,
+    viewModel: ProductListingViewModel
 ) {
     LazyColumn(
         modifier = Modifier
@@ -112,8 +114,8 @@ private fun ProductListLazyColumn(
                 {
                     onNavigateToSearch(it)
                 }
-            ) {
-
+            ) { productId, isFavourite ->
+                viewModel.onEvent(ProductListingEvent.OnFavouriteClicked(productId, isFavourite))
             }
             if (i < state.productList.size) {
                 Divider(

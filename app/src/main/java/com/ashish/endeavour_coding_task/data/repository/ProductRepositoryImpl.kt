@@ -1,9 +1,12 @@
 package com.ashish.endeavour_coding_task.data.repository
 
 import com.ashish.endeavour_coding_task.data.local.ProductDao
+import com.ashish.endeavour_coding_task.data.local.entity.FavProductEntity
+import com.ashish.endeavour_coding_task.data.mapper.toFavProductDomain
 import com.ashish.endeavour_coding_task.data.mapper.toProductDomain
 import com.ashish.endeavour_coding_task.data.mapper.toProductEntity
 import com.ashish.endeavour_coding_task.data.remote.ProductApi
+import com.ashish.endeavour_coding_task.domain.model.FavProduct
 import com.ashish.endeavour_coding_task.domain.model.Product
 import com.ashish.endeavour_coding_task.domain.repository.ProductRepository
 import com.ashish.endeavour_coding_task.util.Resource
@@ -19,7 +22,7 @@ class ProductRepositoryImpl(
         return flow {
 
             emit(Resource.Loading(true))
-            val productListLocal = dao.getProductListFromDb()
+            val productListLocal = dao.getArtistsAndAlbums()
 
             emit(Resource.Success(
                 data = productListLocal.map {
@@ -48,7 +51,7 @@ class ProductRepositoryImpl(
                     )
                 }
                 emit(Resource.Success(
-                    data = dao.getProductListFromDb().map {
+                    data = dao.getArtistsAndAlbums().map {
                         it.toProductDomain()
                     }
                 ))
@@ -67,6 +70,26 @@ class ProductRepositoryImpl(
                     data = productItem.toProductDomain()
                 )
             )
+        }
+    }
+
+    override suspend fun updateProductFavourite(id: String, isFavourite: Boolean) {
+        dao.update(id, isFavourite)
+    }
+
+    override suspend fun addFavProduct(id: String) {
+        dao.insertFavouriteProduct(FavProductEntity(productId = id))
+    }
+
+    override suspend fun removeFavProduct(id: String) {
+        dao.removeFavProduct(id)
+    }
+
+    override suspend fun getFavProducts(): Flow<List<FavProduct>> {
+        return flow {
+            dao.geFavProductList().map {
+                it.toFavProductDomain()
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ package com.ashish.endeavour_coding_task.presentation.productlisting
 
 import com.ashish.endeavour_coding_task.MainCoroutineRule
 import com.ashish.endeavour_coding_task.data.repository.ProductRepositoryFake
-import com.ashish.endeavour_coding_task.domain.usecase.GetProductListUseCase
+import com.ashish.endeavour_coding_task.domain.usecase.product.GetProductListUseCase
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

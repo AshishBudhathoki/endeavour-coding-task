@@ -1,10 +1,9 @@
 package com.ashish.endeavour_coding_task.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.ashish.endeavour_coding_task.data.local.entity.FavProductEntity
 import com.ashish.endeavour_coding_task.data.local.entity.ProductEntity
+import com.ashish.endeavour_coding_task.data.local.entity.ProductWithFavouriteEntity
 
 @Dao
 interface ProductDao {
@@ -20,6 +19,10 @@ interface ProductDao {
     )
     suspend fun getProductListFromDb(): List<ProductEntity>
 
+    @Transaction
+    @Query("SELECT * FROM productentity")
+    suspend fun getArtistsAndAlbums(): List<ProductWithFavouriteEntity>
+
 
     @Query(
         """
@@ -28,7 +31,7 @@ interface ProductDao {
             WHERE id = :id 
         """
     )
-    suspend fun getProductItem(id: String): ProductEntity
+    suspend fun getProductItem(id: String): ProductWithFavouriteEntity
 
     @Query(
         """
@@ -38,4 +41,34 @@ interface ProductDao {
         """
     )
     suspend fun clearProductList()
+
+    @Query(
+        """
+            UPDATE productentity
+            SET isFavourite = :isFavourite
+            WHERE id =:id
+        """
+    )
+    fun update(id: String, isFavourite: Boolean)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFavouriteProduct(favProductEntity: FavProductEntity)
+
+    @Query(
+        """
+            SELECT *
+            FROM favproductentity
+        """
+    )
+    suspend fun geFavProductList(): List<FavProductEntity>
+
+    @Query(
+        """
+            DELETE 
+            FROM 
+            productentity
+            WHERE id = :productId
+        """
+    )
+    suspend fun removeFavProduct(productId: String)
 }

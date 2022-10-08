@@ -1,7 +1,12 @@
 package com.ashish.endeavour_coding_task.domain.di
 
 import com.ashish.endeavour_coding_task.domain.repository.ProductRepository
-import com.ashish.endeavour_coding_task.domain.usecase.GetProductListUseCase
+import com.ashish.endeavour_coding_task.domain.usecase.product.GetProductListUseCase
+import com.ashish.endeavour_coding_task.domain.usecase.ProductUseCases
+import com.ashish.endeavour_coding_task.domain.usecase.favProduct.AddFavouriteProductUseCase
+import com.ashish.endeavour_coding_task.domain.usecase.favProduct.GetFavProductsUseCase
+import com.ashish.endeavour_coding_task.domain.usecase.favProduct.RemoveFavProductUseCase
+import com.ashish.endeavour_coding_task.domain.usecase.product.UpdateProductFavoriteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,9 +22,15 @@ object ProductDomainModule {
 
     @ViewModelScoped
     @Provides
-    fun provideGetProductListUseCase(
+    fun provideProductUseCases(
         repository: ProductRepository
-    ): GetProductListUseCase {
-        return GetProductListUseCase(repository)
+    ): ProductUseCases {
+        return ProductUseCases(
+            GetProductListUseCase(repository),
+            UpdateProductFavoriteUseCase(repository),
+            AddFavouriteProductUseCase(repository),
+            RemoveFavProductUseCase(repository),
+            GetFavProductsUseCase(repository)
+        )
     }
 }

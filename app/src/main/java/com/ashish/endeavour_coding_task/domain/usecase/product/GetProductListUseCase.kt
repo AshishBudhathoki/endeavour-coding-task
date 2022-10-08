@@ -1,4 +1,4 @@
-package com.ashish.endeavour_coding_task.domain.usecase
+package com.ashish.endeavour_coding_task.domain.usecase.product
 
 import com.ashish.endeavour_coding_task.domain.model.Product
 import com.ashish.endeavour_coding_task.domain.repository.ProductRepository
