@@ -26,6 +26,18 @@ class ProductListingViewModel @Inject constructor(
             is ProductListingEvent.Refresh -> {
                 getProductList(true)
             }
+
+            is ProductListingEvent.Product -> {
+                getProductList(false)
+            }
+
+            is ProductListingEvent.Favourite -> {
+                state = state.copy(
+                    productList = state.productList.filter {
+                        it.isFavourite
+                    }
+                )
+            }
         }
     }
 
