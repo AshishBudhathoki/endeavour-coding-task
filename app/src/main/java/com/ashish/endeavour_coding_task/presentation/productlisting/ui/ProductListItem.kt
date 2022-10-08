@@ -89,6 +89,7 @@ fun ProductListItem(
 
                 FavoriteButton(isFavourite = product.isFavourite) {
                     Log.d("Favourite is: %s", "${product.name}  ${it.toString()}")
+                    onToggleFav(it)
                 }
             }
 
